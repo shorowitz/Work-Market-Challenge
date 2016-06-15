@@ -2,7 +2,6 @@ var resume = "Sara Horowitz sslhorowitz@gmail.com | 818.468.5893 | Github: shoro
 
 var cleanRes = resume.replace(/ /gi,'').toLowerCase();
 
-
 var chars = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','0','1','2','3','4','5','6','7','8','9'];
 
 String.prototype.count = function(c) {
@@ -16,13 +15,102 @@ String.prototype.count = function(c) {
   return result;
 };
 
-var data = [];
+var resData = [];
 
 for (var i = 0; i < chars.length; i++) {
   var count = cleanRes.count(chars[i]);
   var char = chars[i];
   var object = {};
-  object['char'] = char;
+  object['char'] = char.toUpperCase();
   object['count'] = count;
-  data.push(object)
+  resData.push(object)
 };
+
+var margin = {top: 20, right: 40, bottom: 40, left: 50};
+
+var width = 1000 - margin.left - margin.right;
+
+var height = 500 - margin.top - margin.bottom;
+
+var tip = d3.tip()
+    .attr('class', 'd3-tip')
+    .offset([-10, 0])
+    .html(function(d) {
+      return '<strong>'+ d.char +':</strong> <span style="color:orange"> ' + d.count + '</span>';
+    })
+
+var svg = d3.select('body')
+  .append('svg')
+  .attr('width', width + margin.left + margin.left)
+  .attr('height', height + margin.top + margin.bottom)
+  .append('g')
+  .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+svg.call(tip);
+
+var yMax = d3.max(resData, function(d) { return d.count; });
+
+var xScale = d3.scale.ordinal()
+  .domain(resData.map(function(d) { return d.char; }))
+  .rangeRoundBands([50, width], 0.1);
+
+var yScale = d3.scale.linear()
+  .domain([0, yMax])
+  .range([(height - 50), 0]);
+
+var xAxis = d3.svg.axis()
+  .scale(xScale)
+  .orient('bottom')
+
+var yAxis = d3.svg.axis()
+  .scale(yScale)
+  .orient('left')
+
+svg.append('g')
+  .attr('class','y axis')
+  .attr('transform','translate(50, 0)')
+  .call(yAxis)
+
+svg.append('g')
+  .attr('class','x axis')
+  .attr('transform','translate(0,' + (height - 50) + ')')
+  .call(xAxis)
+
+var chart = svg.append('g')
+  .selectAll('rect')
+  .data(resData)
+.enter().append('rect')
+  .attr('class','bars')
+  .attr('x', function(d) { return xScale(d.char); })
+  .attr('width', xScale.rangeBand())
+  .attr('y',function(d) { return yScale(d.count); })
+  .attr('height', function(d) { return (height - 50) - yScale(d.count);} )
+  .style('fill','#00D9D9')
+  .on('mouseover', tip.show)
+  .on('mouseout', tip.hide)
+
+
+
+// var tooltip = d3.selectAll('rect')
+//   .append('title')
+//   .text('yio')
+
+svg.append('text')
+    .attr('text-anchor', 'middle')
+    .attr('transform', 'translate(0,'+((height - 50)/2)+')rotate(-90)')
+    .text('Frequency');
+
+svg.append('text')
+    .attr('text-anchor', 'middle')
+    .attr('transform', 'translate('+ ((width+50)/2) +','+(height)+')')
+    .text('Character');
+
+// $('.bars').tipsy({
+//   gravity: 'n',
+//   html: true,
+//   title: function() {
+//                  var d = this.__data__
+//                  console.log(this.__data__)
+//                  return '<strong>' + d.char + '</strong> <span> - ' + d.count + '</span>';
+//                }
+//   })
