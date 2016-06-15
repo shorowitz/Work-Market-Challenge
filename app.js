@@ -16,12 +16,13 @@ String.prototype.count = function(c) {
   return result;
 };
 
-for (var i=0; i < chars.length; i++) {
-  var count = cleanRes.count(chars[i])
-  console.log(count)
-}
+var data = [];
 
-
-// replace(/:/gi,'').replace(/,/gi,'').replace(/@/gi,'').replace(/–/gi,'').replace(/()/gi,'').replace(/•/gi,'')
-
-// console.log(test);
+for (var i = 0; i < chars.length; i++) {
+  var count = cleanRes.count(chars[i]);
+  var char = chars[i];
+  var object = {};
+  object['char'] = char;
+  object['count'] = count;
+  data.push(object)
+};
