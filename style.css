@@ -1,0 +1,61 @@
+body {
+  text-align: center;
+  font-family: 'Rubik', sans-serif;
+}
+
+/*h1 {
+  margin-bottom: -10px;
+}*/
+
+h2 {
+  margin-bottom: -10px;
+}
+
+.axis path,
+  .axis line {
+    fill: none;
+    stroke: black;
+    stroke-width: 1.5px;
+    shape-rendering: crispEdges;
+  }
+
+.axis text {
+  font-size: 12px;
+}
+
+.bars {
+  fill: #00D9D9;
+}
+
+.bars:hover {
+  fill: blue;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 8px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
