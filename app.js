@@ -26,7 +26,7 @@ for (var i = 0; i < chars.length; i++) {
   resData.push(object)
 };
 
-var margin = {top: 20, right: 40, bottom: 40, left: 50};
+var margin = {top: 10, right: 40, bottom: 40, left: 50};
 
 var width = 1000 - margin.left - margin.right;
 
@@ -85,15 +85,8 @@ var chart = svg.append('g')
   .attr('width', xScale.rangeBand())
   .attr('y',function(d) { return yScale(d.count); })
   .attr('height', function(d) { return (height - 50) - yScale(d.count);} )
-  .style('fill','#00D9D9')
   .on('mouseover', tip.show)
-  .on('mouseout', tip.hide)
-
-
-
-// var tooltip = d3.selectAll('rect')
-//   .append('title')
-//   .text('yio')
+  .on('mouseout', tip.hide);
 
 svg.append('text')
     .attr('text-anchor', 'middle')
@@ -104,13 +97,3 @@ svg.append('text')
     .attr('text-anchor', 'middle')
     .attr('transform', 'translate('+ ((width+50)/2) +','+(height)+')')
     .text('Character');
-
-// $('.bars').tipsy({
-//   gravity: 'n',
-//   html: true,
-//   title: function() {
-//                  var d = this.__data__
-//                  console.log(this.__data__)
-//                  return '<strong>' + d.char + '</strong> <span> - ' + d.count + '</span>';
-//                }
-//   })
