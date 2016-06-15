@@ -1,4 +1,4 @@
-# Work-Market Challenge
+# Work Market Challenge
 
 Link: http://shorowitz.github.io/Work-Market-Challenge/
 
